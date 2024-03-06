@@ -39,7 +39,7 @@
     - Docker环境  
     执行命令`docker build -t save2mp4 .`创建镜像，执行完成后运行`docker run -it -p 5005:5005 -v $(pwd):/app -v /volume2/v1st/video:/nas --device=/dev/dri:/dev/dri save2mp4`
     - Linux环境(不使用Docker)  
-    按照以下顺序执行
+    修改app.py中19行save_path为你自己的保存地址后，按照以下顺序执行
     ```
     pip3 install -r requirements.txt
     nohup python3 app.py > save2mp4.log 2>&1 &
