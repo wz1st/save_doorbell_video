@@ -5,7 +5,7 @@
 ### 准备
 #### HomeAssistant
 - 接入米家xiaomi_miot_auto
-- 安装pyscript
+- HACS安装pyscript
 #### Nas
 - Docker运行环境
 
