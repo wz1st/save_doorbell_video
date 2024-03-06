@@ -16,12 +16,18 @@ def save_video():
     data = request.form
     stream_address = urllib.parse.unquote(data.get('stream_address'))
     motion_video_time = data.get('motion_video_time')
-    save_path = '/nas' 
+    save_path = '/nas'  #视频保存位置
+    video_limit = '30'  #保存天数上限
+
     m3u8_file = f'{save_path}/tmp/{motion_video_time}.m3u8'
     ts_tmp_dir = f'{save_path}/tmp/{motion_video_time}/'
 
     try:
         os.makedirs(f"{save_path}/{current_date}")
+    except:
+        pass
+    try:
+        os.makedirs(f"{save_path}/tmp")
     except:
         pass
     try:
@@ -44,6 +50,8 @@ def save_video():
             # 启用VAAPI硬编码
             # os.system(f"ffmpeg -f concat -safe 0 -i {ts_tmp_dir}ts.list -vaapi_device /dev/dri/renderD128 -c:v h264_vaapi -global_quality 25 -vf 'format=nv12|vaapi,hwupload' -c:a copy {save_path}/{current_date}/{motion_video_time}.mp4")
             os.system(f"rm -rf {save_path}/tmp/{motion_video_time}*")
+            os.system(f"find {save_path} -type f -mtime +{video_limit} -delete")
+            os.system(f"find {save_path} -depth -type d -empty -delete")
         except:
             pass
     return "ok"
